@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("../services/passport");
 const router = express.Router();
 const { requiresAuth } = require("../utils");
+const { User } = require('../models/user.model')
 
 router.get("/", async function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -42,6 +43,49 @@ router
       });
     })(req, res, next);
   });
+
+
+// router('/login/forget-password')
+//   .get(async function(req, res){
+//     res.json({msg: 'forget password'})
+//   })
+//   .post(async function(req, res){
+    
+//   })
+
+
+// router('/login/reset-password')
+//   .get(async function(req, res){
+//     res.json({msg: 'forget password'})
+//   })
+//   .post(async function(req, res){
+    
+//   })
+
+router.get('/login/forgot-password', async (req, res, next)=> {
+  res.render("forgot-password")
+})
+
+router.post('/login/forgot-password', async (req, res, next)=> {
+  const { email } = req.body
+  res.send(email)
+
+  
+  const test = User.find({email: email})
+  if(!test){
+    res.send(email)
+  }
+  res.send('worked')
+})
+
+router.get('/login/reset-password', async (req, res, next)=> {
+  res.render('reset-password')
+})
+
+router.post('/login/reset-password', async (req, res, next)=> {
+  
+})
+
 
 router.get("/logout", requiresAuth, function (req, res, next) {
   req.logout();

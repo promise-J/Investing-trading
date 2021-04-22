@@ -6,3 +6,4 @@ function requiresAuth(req, res, next) {
 }
 
 module.exports = requiresAuth;
+

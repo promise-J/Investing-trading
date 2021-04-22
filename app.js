@@ -31,7 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", require("./routes/index.route"));
 app.use("/users", require("./routes/users.route"));
-app.use("/transactions", require("./routes/transactions.route."));
+app.use("/transactions", require("./routes/transactions.route"));
 
 db.once("connected", function () {
   return console.log(`🍃 connected to ${mongo.uri}`);

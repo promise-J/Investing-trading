@@ -27,7 +27,7 @@ const config = {
     port: process.env.PORT || 9000,
     secretKey: requireProcessEnv("SECRET"),
     mongo: {
-      uri: "mongodb://localhost/Investing-trading",
+      uri: "mongodb+srv://promise:promise123@real.jme6j.mongodb.net/invest?retryWrites=true&w=majority",
       options: {
         useUnifiedTopology: true,
         useNewUrlParser: true,
