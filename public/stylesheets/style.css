@@ -47,11 +47,6 @@ body {
   }
 }
 
-header {
-  /* background-color: #183e91;
-  height: 40px; */
-}
-
 .button {
   background-color: var(--primary-color);
   color: var(--primary-light-color);
@@ -66,7 +61,7 @@ header {
 .input-group {
   width: 100%;
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.1rem;
   margin-bottom: 10px;
   border-radius: none;
   background: rgb(232, 240, 254);
@@ -80,6 +75,12 @@ header {
   width: 100%;
   height: 100%;
   outline: none;
+}
+.input-group input,
+.input-group input::placeholder {
+  font-weight: 300;
+  color: #000000;
+  font-size: 0.9rem;
 }
 /* 
 Auth Pages
@@ -95,12 +96,15 @@ Auth Pages
 .auth__form,
 .auth__banner {
   width: 100%;
-  height: 50vh;
+  min-height: 50vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
+.auth__form {
+  padding: 2rem 0;
+}
 .auth__form__inner {
   width: 80%;
 }
@@ -109,8 +113,6 @@ Auth Pages
 }
 .auth__form__inner form {
   width: 100%;
-}
-.auth__form input {
 }
 
 .input-group {
@@ -121,6 +123,9 @@ Auth Pages
   /* border-radius: 0.5rem; */
 }
 
+.terms-check {
+  margin: 1rem 0;
+}
 .auth__banner {
   background: url("https://stead-fast.net/assets/images/log-reg.jpg");
   /* background: url("https://pixabay.com/get/g2db78f41e478b828a2bc7d40184c6c72f27f358f2251837516917e4a8138b6417ea121eb970637c3498d43636304825f_1280.png"); */
@@ -167,3 +172,5 @@ Auth Pages
     height: 100%;
   }
 }
+
+/* End Auth Pages */

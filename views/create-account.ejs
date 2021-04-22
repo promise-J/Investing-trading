@@ -4,40 +4,100 @@
     <%- include('partials/head') %>
   </head>
   <body>
-    <header><%- include('partials/header') %></header>
-    <main>
-      <h1>Register</h1>
-      <form action="/users/" method="POST">
-        <label for="fullName">First name:</label><br />
-        <input type="text" id="fullName" name="fullName" value="igwe" /><br />
+    <main class="auth">
+      <div class="auth__form">
+        <div class="auth__form__inner">
+          <div class="auth__form__meta">
+            <h1>Registration at stead-fast.net:</h1>
+          </div>
+          <form action="/users/" method="POST">
+            <div class="input-group">
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                placeholder="Your Full Name"
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Your Username"
+              />
+            </div>
 
-        <label for="username">Username:</label><br />
-        <input
-          type="username"
-          id="username"
-          name="username"
-          value="danyel"
-        /><br />
+            <div class="input-group">
+              <input
+                type="text"
+                id="password"
+                name="password"
+                placeholder="Define Password"
+              />
+            </div>
 
-        <label for="email">Email:</label><br />
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value="danielchi@gmail.com"
-        /><br />
+            <div class="input-group">
+              <input
+                placeholder="Re-type Password"
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+              />
+            </div>
 
-        <label for="password">Password:</label><br />
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value="mypassword"
-        /><br />
+            <div class="input-group">
+              <input
+                placeholder="Your PerfectMoney Account"
+                type="text"
+                id="perfectMoneyAccount"
+                name="perfectMoneyAccount"
+              />
+            </div>
 
-        <button>submit</button>
-      </form>
+            <div class="input-group">
+              <input
+                placeholder="Your Bitcoin Wallet Address"
+                type="text"
+                id="bitcoinAddress"
+                name="bitcoinAddress"
+              />
+            </div>
+
+            <div class="input-group">
+              <input
+                placeholder="Your Etherum Wallet Address"
+                type="text"
+                id="etherumAddress"
+                name="etherumAddress"
+              />
+            </div>
+
+            <div class="input-group">
+              <input
+                placeholder="Your Email  Address"
+                type="text"
+                id="email"
+                name="email"
+              />
+            </div>
+            <div class="terms-check">
+              <input type="checkbox" name="terms" id="terms" /> I agree with
+              Terms and conditions
+            </div>
+            <button class="button">create account</button>
+          </form>
+        </div>
+      </div>
+      <div class="auth__banner">
+        <div class="content">
+          <div class="logo">
+            <img src="./images/logo.png" alt="" />
+          </div>
+          <h2>Earn with us</h2>
+          <a class="button" href="/login">Login</a>
+        </div>
+      </div>
     </main>
-    <footer><%- include('partials/footer') %></footer>
   </body>
 </html>
