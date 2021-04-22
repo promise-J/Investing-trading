@@ -1,12 +1,13 @@
 const express = require("express"),
-  path = require("path"),
-  session = require("express-session");
+  session = require("express-session"),
+  { flash } = require("express-flash-message");
 
-const mongoose = require("./services/mongoose");
+const mongoose = require("./services/mongoose"),
+  passport = require("./services/passport");
 
 const { port, mongo, secretKey } = require("./config");
 
-const db = mongoose.createConnection(mongo.uri);
+const db = mongoose.connection;
 const app = express();
 
 app.set("port", port);
@@ -22,14 +23,18 @@ app.use(
   })
 );
 
+app.use(flash({ sessionKeyName: "flashMessage", useCookieSession: true }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use("/", require("./routes/index.route"));
 app.use("/users", require("./routes/users.route"));
 app.use("/transactions", require("./routes/transactions.route."));
 
 db.once("connected", function () {
-  return console.log(`Successfully connected to ${mongo.uri}`);
+  return console.log(`🍃 connected to ${mongo.uri}`);
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`🚀 listening at http://localhost:${port}`);
 });

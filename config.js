@@ -29,9 +29,9 @@ const config = {
     mongo: {
       uri: "mongodb://localhost/Investing-trading",
       options: {
-        debug: true,
         useUnifiedTopology: true,
         useNewUrlParser: true,
+        useCreateIndex: true,
       },
     },
   },

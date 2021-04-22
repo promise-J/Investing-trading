@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('partials/head') %>
+  </head>
+  <body>
+    <header><%- include('partials/header') %></header>
+    <main>
+      <h1>Register</h1>
+      <form action="/users/" method="POST">
+        <label for="fullName">First name:</label><br />
+        <input type="text" id="fullName" name="fullName" value="igwe" /><br />
+
+        <label for="username">Username:</label><br />
+        <input
+          type="username"
+          id="username"
+          name="username"
+          value="danyel"
+        /><br />
+
+        <label for="email">Email:</label><br />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value="danielchi@gmail.com"
+        /><br />
+
+        <label for="password">Password:</label><br />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value="mypassword"
+        /><br />
+
+        <button>submit</button>
+      </form>
+    </main>
+    <footer><%- include('partials/footer') %></footer>
+  </body>
+</html>
