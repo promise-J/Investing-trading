@@ -8,12 +8,18 @@ router.get("/", async function (req, res, next) {
 });
 
 router.get("/create-account", function (req, res, next) {
-  res.render("create-account", { title: "Express" });
+  if (req.isAuthenticated()) {
+    return res.redirect("/account");
+  }
+  res.render("create-account", { title: "SignUp" });
 });
 
 router
   .route("/login")
   .get(async function (req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect("/account");
+    }
     const messages = await req.consumeFlash("success");
     res.render("login", { title: "Login", messages });
   })
@@ -23,7 +29,6 @@ router
         return next(err); // will generate a 500 error
       }
       if (!user) {
-        res.render("login", { title: "Login", messages });
         return res
           .status(409)
           .render("login", { errMsg: "Invalid Credentials" });

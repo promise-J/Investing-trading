@@ -4,29 +4,45 @@
     <%- include('partials/head') %>
   </head>
   <body>
-    <header><%- include('partials/header') %></header>
-    <main>
-      <h1>Login</h1>
-      <form action="/login/" method="POST">
-        <label for="username">Username:</label><br />
-        <input
-          type="username"
-          id="username"
-          name="username"
-          value="danyel"
-        /><br />
+    <main class="auth">
+      <div class="auth__form">
+        <div class="auth__form__inner">
+          <div class="auth__form__meta">
+            <h1>Login</h1>
+            <p>Log in using your username and password</p>
+          </div>
+          <form action="/login/" method="POST">
+            <div class="input-group">
+              <input
+                type="username"
+                id="username"
+                name="username"
+                placeholder="e.g John Doe"
+              />
+            </div>
 
-        <label for="password">Password:</label><br />
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value="mypassword"
-        /><br />
+            <div class="input-group">
+              <input
+                placeholder="e.g matteblack"
+                type="password"
+                id="password"
+                name="password"
+              />
+            </div>
 
-        <button>LogIn</button>
-      </form>
+            <button class="button">LogIn</button>
+          </form>
+        </div>
+      </div>
+      <div class="auth__banner">
+        <div class="content">
+          <div class="logo">
+            <img src="./images/logo.png" alt="" />
+          </div>
+          <h2>Earn with us</h2>
+          <a class="button" href="/create-account">create an account</a>
+        </div>
+      </div>
     </main>
-    <footer><%- include('partials/footer') %></footer>
   </body>
 </html>
