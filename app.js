@@ -1,5 +1,7 @@
 const express = require("express"),
   session = require("express-session"),
+  nodeMailer = require('nodemailer'),
+  crypto = require('crypto'),
   { flash } = require("express-flash-message");
 
 const mongoose = require("./services/mongoose"),
