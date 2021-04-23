@@ -2,7 +2,6 @@ const express = require("express");
 const passport = require("../services/passport");
 const router = express.Router();
 const { requiresAuth } = require("../utils");
-
 const { User } = require("../models/user.model");
 
 router.get("/", async function (req, res, next) {
@@ -75,6 +74,27 @@ router
       });
     })(req, res, next);
   });
+
+router.get("/forgot-password", async (req, res, next) => {
+  res.render("forgot-password");
+});
+
+router.post("/forgot-password", async (req, res, next) => {
+  const { email } = req.body;
+  res.send(email);
+
+  const test = User.find({ email: email });
+  if (!test) {
+    res.send(email);
+  }
+  res.send("worked");
+});
+
+router.get("/reset-password", async (req, res, next) => {
+  res.render("reset-password");
+});
+
+router.post("/reset-password", async (req, res, next) => {});
 
 router.get("/logout", requiresAuth, function (req, res, next) {
   req.logout();
