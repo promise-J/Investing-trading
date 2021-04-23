@@ -103,16 +103,31 @@ router.get("/logout", requiresAuth, function (req, res, next) {
 });
 
 router.get("/account", requiresAuth, function (req, res, next) {
-  console.log(req.user);
-  res.render("account", { title: "Account" });
+  res.render("account", { title: "account", user: req.user });
 });
 
 router.get("/settings", requiresAuth, function (req, res, next) {
-  res.render("settings", { title: "Settings" });
+  res.render("settings", { title: "settings" });
 });
 
 router.get("/referrals", requiresAuth, function (req, res, next) {
   res.render("referrals", { title: "referrals" });
+});
+
+router.get("/deposit", requiresAuth, function (req, res, next) {
+  res.render("deposit", { title: "deposit" });
+});
+
+router.get("/deposit_list", requiresAuth, function (req, res, next) {
+  res.render("deposit_list", { title: "deposit_list" });
+});
+
+router.get("/withdraw", requiresAuth, function (req, res, next) {
+  res.render("withdraw", { title: "withdraw" });
+});
+
+router.get("/history", requiresAuth, function (req, res, next) {
+  res.render("history", { title: "history" });
 });
 
 module.exports = router;

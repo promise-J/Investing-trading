@@ -38,6 +38,10 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  lastAcess: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 UserSchema.methods.generateHash = function (password) {

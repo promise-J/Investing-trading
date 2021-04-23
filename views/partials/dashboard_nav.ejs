@@ -1,11 +1,66 @@
 <div class="dashboard_nav">
-  <ul>
-    <li><a href="/account" class="link">Account</a></li>
-    <li><a href="/deposit" class="link">make deposit</a></li>
-    <li><a href="/withdraw" class="link">withdraw your profit</a></li>
-    <li><a href="/history" class="link">History</a></li>
-    <li><a href="/referrals" class="link">referrals</a></li>
-    <li><a href="/settings" class="link">settings</a></li>
-    <li><a href="/logout" class="link">logout</a></li>
-  </ul>
+  <div  class="links">
+    
+    <a href="/account"  <% if (title === 'account') { %>class="link active"  <% } else{ %>  
+      class="link"  
+   <% } %>>
+      <span class="icon">
+        <i class="fas fa-tachometer-alt"></i>
+      </span>
+      <span >Account</span>
+    </a>
+
+    <a href="/deposit" <% if (title === 'deposit') { %>class="link active"  <% } else{ %>  
+      class="link"  
+   <% } %>>
+      <span class="icon"> <i class="fas fa-search-dollar"></i></span
+      ><span >make deposit</a>
+      </a>
+
+
+    <a href="/deposit_list"  <% if (title === 'deposit_list') { %>class="link active"  <% } else{ %>  
+      class="link"  
+   <% } %>>
+      <span class="icon"><i class="fas fa-piggy-bank"></i></span
+      ><span >deposit list</span>
+      </a>
+
+
+    <a href="/withdraw" <% if (title === 'withdraw') { %>class="link active"  <% } else{ %>  
+      class="link"  
+   <% } %>>
+      <span class="icon"> <i class="fas fa-wallet"></i></span
+      ><span>withdraw your profit</span>
+      </a>
+
+
+    <a href="/history" <% if (title === 'history') { %>class="link active"  <% } else{ %>  
+      class="link"  
+   <% } %>>
+      <span class="icon"> <i class="fas fa-ticket-alt"></i></span
+      ><span  >History</span>
+      </a>
+    
+    <a href="/referrals" <% if (title === 'referrals') { %>class="link active"  <% } else{ %>  
+      class="link"  
+   <% } %>>
+      <span class="icon"> <i class="fas fa-handshake"></i> </span
+      ><span>referrals</span>
+      </a>
+
+
+    <a href="/settings" <% if (title === 'settings') { %>class="link active"  <% } else{ %>  
+      class="link"  
+   <% } %>>
+      <span class="icon"> <i class="fas fa-cogs"></i></span
+      ><span>settings</span>
+      </a>
+
+
+    <a href="/logout"  class="link">
+      <span class="icon"> <i class="fas fa-sign-in-alt"></i></span
+      ><span >secure logout</span>
+      </a>
+  </div>
 </div>
+<div class="dashboard_nav-reset"></div>

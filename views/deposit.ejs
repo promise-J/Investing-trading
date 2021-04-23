@@ -4,10 +4,13 @@
     <%- include('partials/head') %>
   </head>
   <body>
-    <header><%- include('partials/header') %></header>
-    <main>
-      <h1>Make deposit</h1>
+    <%- include('partials/header') %>
+
+    <main class="dashboard">
+      <%- include('partials/dashboard_nav') %>
+      <div class="dashboard__page">
+        <h1>Make deposit</h1>
+      </div>
     </main>
-    <footer><%- include('partials/footer') %></footer>
   </body>
 </html>
