@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "dotenv-safe": "^8.2.0",
+    "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-flash-message": "^2.1.0",
