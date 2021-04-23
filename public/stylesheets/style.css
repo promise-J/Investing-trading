@@ -410,6 +410,7 @@ header .action__buttons .button.logout {
   .dashboard_nav {
     left: 0px;
     z-index: 50;
+    transition: none;
   }
   .overlay {
     display: none;
