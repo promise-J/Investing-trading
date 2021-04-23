@@ -13,6 +13,7 @@ passport.deserializeUser(function (id, done) {
       console.error(
         "There was an error accessing the records of" + " user with id: " + id
       );
+    
       return done(error);
     }
     return done(null, user);
