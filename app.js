@@ -29,9 +29,8 @@ app.use(flash({ sessionKeyName: "flashMessage", useCookieSession: true }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use("/", require("./routes/index.route"));
-app.use("/users", require("./routes/users.route"));
-app.use("/transactions", require("./routes/transactions.route."));
+
+app.use("/", require("./routes"));
 
 db.once("connected", function () {
   return console.log(`🍃 connected to ${mongo.uri}`);

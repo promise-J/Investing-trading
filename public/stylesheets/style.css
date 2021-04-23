@@ -14,6 +14,12 @@
 }
 body {
   font-family: "Ubuntu", sans-serif;
+  height: var(--vh);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Global Styles */
@@ -82,6 +88,7 @@ body {
   color: #000000;
   font-size: 0.9rem;
 }
+
 /* 
 Auth Pages
 */
@@ -96,7 +103,7 @@ Auth Pages
 .auth__form,
 .auth__banner {
   width: 100%;
-  min-height: 50vh;
+  min-height: calc(var(--vh) * 0.5);
 
   display: flex;
   align-items: center;
@@ -127,8 +134,8 @@ Auth Pages
   margin: 1rem 0;
 }
 .auth__banner {
-  background: url("https://stead-fast.net/assets/images/log-reg.jpg");
-  /* background: url("https://pixabay.com/get/g2db78f41e478b828a2bc7d40184c6c72f27f358f2251837516917e4a8138b6417ea121eb970637c3498d43636304825f_1280.png"); */
+  /* background: url("https://stead-fast.net/assets/images/log-reg.jpg"); */
+  background: url("/images/banner-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -161,7 +168,7 @@ Auth Pages
   }
 
   .auth {
-    height: 100vh;
+    height: var(--vh);
     justify-content: center;
     align-items: center;
     flex-direction: row;
@@ -174,3 +181,45 @@ Auth Pages
 }
 
 /* End Auth Pages */
+
+/* Dashboard  Pages*/
+header {
+  height: 100px;
+  background-color: #000;
+}
+.dashboard {
+  display: flex;
+  height: calc(100% - 100px);
+}
+
+.dashboard__page {
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.dashboard_nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #d601f9;
+  color: #fff;
+}
+/* End Dashboard Pages */
+
+@media (min-width: 768px) {
+  .dashboard {
+    display: flex;
+    /* height: var(--vh); */
+  }
+
+  .dashboard__page {
+    width: 80%;
+  }
+
+  .dashboard_nav {
+    height: 100%;
+    width: 20%;
+    position: static;
+  }
+}
