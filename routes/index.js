@@ -3,7 +3,7 @@ const passport = require("../services/passport");
 const router = express.Router();
 const { requiresAuth } = require("../utils");
 const { User } = require("../models/user.model");
-
+const { plans } = require("../config");
 router.get("/", async function (req, res, next) {
   res.render("index", { title: "Express" });
 });
@@ -106,16 +106,16 @@ router.get("/account", requiresAuth, function (req, res, next) {
   res.render("account", { title: "account", user: req.user });
 });
 
+router.route("/deposit").get(requiresAuth, function (req, res, next) {
+  res.render("deposit", { title: "deposit", plans });
+});
+
 router.get("/settings", requiresAuth, function (req, res, next) {
   res.render("settings", { title: "settings" });
 });
 
 router.get("/referrals", requiresAuth, function (req, res, next) {
   res.render("referrals", { title: "referrals" });
-});
-
-router.get("/deposit", requiresAuth, function (req, res, next) {
-  res.render("deposit", { title: "deposit" });
 });
 
 router.get("/deposit_list", requiresAuth, function (req, res, next) {

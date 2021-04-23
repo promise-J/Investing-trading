@@ -9,8 +9,74 @@
     <main class="dashboard">
       <%- include('partials/dashboard_nav') %>
       <div class="dashboard__page">
-        <h1>Make deposit</h1>
+        <div class="container dashboard__page__content">
+          <h2>Make a deposit</h2>
+
+          <% plans.forEach(function(plan){ %>
+          <div class="card plan">
+            <h4><%= plan.name %></h4>
+            <div class="plan__content">
+              <table>
+                <thead>
+                  <tr>
+                    <th>description</th>
+                    <th>spent amount</th>
+                    <th>profit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><%= plan.desc %></td>
+                    <td><%= plan.priceRange %></td>
+                    <td><%= plan.profit %>%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <% }) %>
+          <div class="checkout card">
+            <h3 class="balance">
+              <span> Your account balance ($): </span>
+              <span class="value"> $0.00 </span>
+            </h3>
+
+            <div class="spend-amount">
+              <span> Amount to Spend ($):</span>
+              <div class="input-group">
+                <input type="number" name="amount" id="" placeholder="100.0" />
+              </div>
+            </div>
+
+            <div class="choice-payment">
+              <div class="choice">
+                <div class="checkbox">
+                  <input type="radio" name="choice" id="bitcoin" />
+                  <label for="bitcoin">
+                    <span class="icon">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </label>
+                  <p class="text">Spend funds from Bitcoin</p>
+                </div>
+
+                <div class="checkbox">
+                  <input type="radio" name="choice" id="perfectmoney" />
+                  <label for="perfectmoney">
+                    <span class="icon">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </label>
+                  <p class="text">Spend funds from Perfect Money Account</p>
+                </div>
+              </div>
+            </div>
+
+            <a href="#" class="button spend-button">Spend</a>
+          </div>
+        </div>
       </div>
     </main>
+    <%- include('partials/footer') %>
   </body>
 </html>
