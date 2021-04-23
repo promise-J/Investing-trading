@@ -9,3 +9,25 @@ function updateBrowserDimensions() {
 }
 
 updateBrowserDimensions();
+
+const nav = document.querySelector(".dashboard_nav"),
+  overlay = document.querySelector(".overlay"),
+  menu = document.querySelector("#menu");
+
+if (menu && overlay && nav) {
+  menu.addEventListener("click", (e) => {
+    nav.classList.toggle("active");
+    overlay.classList.add("show");
+    setTimeout(() => {
+      overlay.classList.add("active");
+    });
+  });
+
+  overlay.addEventListener("click", (e) => {
+    nav.classList.toggle("active");
+    overlay.classList.remove("active");
+    setTimeout(() => {
+      overlay.classList.remove("show");
+    }, 400);
+  });
+}

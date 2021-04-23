@@ -34,6 +34,8 @@ li {
 .button-outline {
   color: var(--primary-light-color);
   height: 3rem;
+  min-width: fit-content;
+  padding: 0 10px;
   width: 100%;
   cursor: pointer;
   border: none;
@@ -59,7 +61,38 @@ li {
     font-size: 16px;
   }
 }
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+.checkbox input {
+  display: none;
+}
+.checkbox label .icon {
+  color: #000;
+  display: none;
+}
+.checkbox input:checked + label .icon {
+  display: block;
+}
 
+.checkbox .text {
+  flex: 1;
+}
+.checkbox label {
+  cursor: pointer;
+  --check-size: 15px;
+  border: 1px solid #000;
+  height: var(--check-size);
+  width: var(--check-size);
+  background: #fff;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
 .button {
   background-color: var(--primary-color);
   color: var(--primary-light-color);
@@ -165,9 +198,11 @@ Auth Pages
   /* display: none; */
 }
 .auth__banner .content .button {
-  background: #fff;
-  color: #000;
-  margin-top: 10px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  width: 250px;
+  margin: 10px auto 0;
 }
 @media (min-width: 768px) {
   .auth__form__inner {
@@ -190,7 +225,12 @@ Auth Pages
 /* End Auth Pages */
 
 /* Dashboard  Pages*/
-
+footer {
+  height: 30px;
+}
+.header-reset {
+  height: 70px;
+}
 header {
   height: 70px;
   background-color: #353c48;
@@ -199,6 +239,7 @@ header {
   z-index: 100;
   width: 100%;
 }
+
 .header__inner {
   display: flex;
   align-items: center;
@@ -216,6 +257,18 @@ header .logo {
 }
 header .logo img {
 }
+
+header .menu_button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 50%;
+}
+header .menu_button .icon {
+  font-size: 2.3rem;
+  color: #fff;
+  cursor: pointer;
+}
 header .action__buttons {
   display: none;
 }
@@ -230,8 +283,7 @@ header .action__buttons .button.logout {
 }
 .dashboard {
   display: flex;
-  height: var(--vh);
-  padding-top: 70px;
+  /* height: var(--vh); */
 }
 
 .dashboard__page {
@@ -250,19 +302,44 @@ header .action__buttons .button.logout {
   position: fixed;
   top: 0;
   left: -1000px;
-  background: #d601f9;
+  background: #8a3598;
   color: #fff;
-  z-index: 200;
+  z-index: 2000;
   height: var(--vh);
   width: calc(var(--vw) * 0.8);
   max-width: 300px;
+  transition: ease-in 0.4s;
+}
+.dashboard_nav.active {
+  left: 0;
+  transition: ease-out 0.4s;
+}
+
+.overlay {
+  position: fixed;
+  background: rgba(51, 56, 89);
+  opacity: 0;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: none;
+  z-index: 1000;
+  transition: linear 0.2s;
+}
+.overlay.show {
+  display: block;
+}
+.overlay.active {
+  opacity: 0.5;
+  transition: linear 0.2s;
 }
 .dashboard_nav .links {
   width: 90%;
   margin: 120px auto 0;
 }
 
-.dashboard_nav .links .link {
+.dashboard_nav .link {
   color: #fff;
   white-space: nowrap;
 
@@ -280,20 +357,20 @@ header .action__buttons .button.logout {
   /* border-radius: 3rem; */
   border: none;
 }
-.dashboard_nav .links .link .icon {
+.dashboard_nav .link .icon {
   width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.dashboard_nav .links .link:hover {
+.dashboard_nav .link:hover {
   color: #2196f3;
   background-color: rgba(0, 0, 0, 0.15);
   transition: ease-out 0.2s;
 }
 
-.dashboard_nav .links .link.active,
-.dashboard_nav .links .link.active:hover {
+.dashboard_nav .link.active,
+.dashboard_nav .link.active:hover {
   background: rgb(28, 183, 236);
   color: #111;
 }
@@ -319,6 +396,9 @@ header .action__buttons .button.logout {
   header {
     height: 70px;
   }
+  header .menu_button {
+    display: none;
+  }
   .dashboard {
     display: flex;
   }
@@ -330,17 +410,19 @@ header .action__buttons .button.logout {
   .dashboard_nav {
     left: 0px;
     z-index: 50;
+    transition: none;
   }
-
+  .overlay {
+    display: none;
+  }
   .dashboard_nav-reset {
     display: block;
   }
 }
 
 /* Account */
-.info,
-.quick-links,
-.account__stats {
+
+.card {
   border-radius: 10px;
   padding: 15px;
   background: darkslateblue;
@@ -358,6 +440,7 @@ header .action__buttons .button.logout {
   width: 100%;
   padding: 5px 0;
 }
+
 .quick-links {
   margin-top: 40px;
   display: flex;
@@ -369,8 +452,6 @@ header .action__buttons .button.logout {
 }
 
 .account__stats table {
-  /* display: table-row-group; */
-
   width: 100%;
 }
 .account__stats tbody {
@@ -381,7 +462,6 @@ header .action__buttons .button.logout {
   color: #fff;
 }
 .account__stats table td {
-  /* display: table-cell; */
   border-bottom: 1px solid #eee;
   padding: 10px;
 }
@@ -410,4 +490,58 @@ header .action__buttons .button.logout {
 }
 /* End Account */
 
+/* Deposit */
+.plan {
+  margin-bottom: 20px;
+  color: #fff;
+}
+.plan__content {
+  padding: 10px 0;
+}
+.plan h4,
+.checkout h4 {
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.plan table {
+  width: 100%;
+  text-align: center;
+  text-transform: capitalize;
+  table-layout: fixed;
+}
+.plan tbody {
+  margin: 10px 0 10px;
+}
+.checkout {
+  color: #fff;
+}
+.balance {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.balance span {
+  flex: 1;
+}
+.balance .value {
+  display: flex;
+  justify-content: flex-end;
+}
+.spend-amount {
+  display: flex;
+  align-items: center;
+}
+.spend-amount span,
+.spend-amount .input-group {
+  flex: 1;
+}
+
+.choice-payment {
+}
+.choice-payment .choice {
+}
+.spend-button {
+  margin: 20px 0 0;
+}
+/* End Deposit */
 /* End Dashboard Pages */
