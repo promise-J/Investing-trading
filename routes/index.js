@@ -1,4 +1,5 @@
 const express = require("express");
+const nodemailer = require('nodemailer');
 const passport = require("../services/passport");
 const router = express.Router();
 const { requiresAuth } = require("../utils");
@@ -87,7 +88,7 @@ router.post("/forgot-password", async (req, res, next) => {
   const { email } = req.body;
   console.log(email);
   User.findOne({ email: email }, function (err, user) {
-    if (!user) return res.status(401).render("login", {title: 'login', message: "email not found"}); 
+    if (!user) return res.status(401).render("login", {title: 'forget-password', message: "email not found"}); 
 
     const userData = {
       email: user.email,
@@ -97,8 +98,37 @@ router.post("/forgot-password", async (req, res, next) => {
     const token = jwt.sign(userData, jwt_secret, { expiresIn: "15m" });
 
     const link = `http://localhost:9000/reset-password/${token}`;
+    
+
+let mailTransporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: 'user@gmail.com',
+		pass: '*********'
+	}
+});
+console.log('gmail setup done...');
+
+
+
+let mailDetails = {
+	from: 'chiemelapromise30@gmail.com',
+	to: 'chiemelapromise30@gmail.com',
+	subject: 'Password reset.',
+	text: 'You requested for a password reset,  Please click on the link below.',
+  html: `<p>${link}</p>`
+};
+
+mailTransporter.sendMail(mailDetails, function(err, data) {
+	if(err) {
+		console.log('server error happened');
+	} else {
+		console.log('Email sent successfully');
+	}
+});
+
     console.log(link);
-    return res.send("A link has been sent to your email to reset the password");
+    return res.send("A link has been sent to your email to reset the password. Please check your Gmail");
   });
 });
 
