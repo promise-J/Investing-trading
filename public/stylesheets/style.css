@@ -64,6 +64,7 @@ li {
 .checkbox {
   display: flex;
   align-items: center;
+  display: inline-block;
 }
 .checkbox input {
   display: none;
@@ -254,8 +255,6 @@ header .logo {
   object-fit: contain;
   position: relative;
   left: -50px;
-}
-header .logo img {
 }
 
 header .menu_button {
@@ -536,9 +535,9 @@ header .action__buttons .button.logout {
   flex: 1;
 }
 
-.choice-payment {
-}
-.choice-payment .choice {
+.choice-payment .checkbox {
+  display: flex;
+  align-items: center;
 }
 .spend-button {
   margin: 20px 0 0;
@@ -547,10 +546,10 @@ header .action__buttons .button.logout {
 /* End Dashboard Pages */
 
 /* Reset Pages */
-.reset-con{
+.reset-con {
   background-color: black;
   width: 80vw;
-  min-height: 50vh;
+  height: 50vh;
   margin: auto;
 }
 

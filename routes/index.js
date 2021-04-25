@@ -1,13 +1,13 @@
 const express = require("express");
-const nodemailer = require('nodemailer');
 const passport = require("../services/passport");
-const router = express.Router();
-const { requiresAuth } = require("../utils");
-const { User } = require("../models/user.model");
-const { plans } = require("../config");
-
 const jwt = require("jsonwebtoken");
-const jwt_secret = process.env.JWT_SECRET;
+const ejs = require("ejs");
+
+const router = express.Router();
+const { requiresAuth, sendMail } = require("../utils");
+const { User } = require("../models/user.model");
+const { plans, host, jwt_secret } = require("../config");
+
 router.get("/", async function (req, res, next) {
   res.render("index", { title: "Express" });
 });
@@ -79,97 +79,80 @@ router
     })(req, res, next);
   });
 
-router.get("/forgot-password", async (req, res, next) => {
-  res.render("forgot-password", {title: "forgot password"});
-});
+router
+  .route("/forgot-password")
+  .get(async (req, res, next) => {
+    res.render("forgot-password", { title: "forgot password" });
+  })
+  .post(async (req, res, next) => {
+    const { email } = req.body;
 
-router.post("/forgot-password", async (req, res, next) => {
-  const { email } = req.body;
-  console.log(email);
-  User.findOne({ email: email }, function (err, user) {
-    if (!user) return res.status(401).render("login", {title: 'forget-password', message: "email not found"}); 
-    
-    const {username} = user
-    const userData = {
-      email: user.email,
-      id: user.id,
-    };
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        console.log("no user");
+        await req.flash("error", "email noneexistent");
+        return res.status(400).redirect("/forgot-password");
+      }
+      const { username, id } = user;
 
-    const token = jwt.sign(userData, jwt_secret, { expiresIn: "15m" });
+      const token = await jwt.sign({ email, id }, jwt_secret, {
+        expiresIn: "15m",
+      });
+      const link = `${host}/reset-password/${token}`;
 
-    const link = `http://localhost:9000/reset-password/${token}`;
-    
+      const html = `
+    <p>Hello <%= username %>,</p>
+    <p>Please confirm your request to reset password</p>
+    <p>Click on the link below</p>
+    <p>
+    <a href="<%= link %>"><%= link %></a>
+  </p>
+    <p>Thank you</p>
+    <a href="">stead-fast.com</a>
+    `;
 
-let mailTransporter = nodemailer.createTransport({
-	service: 'gmail',
-	auth: {
-		user: process.env.AUTH_USER,
-		pass: process.env.AUTH_PASS
-	}
-});
-console.log('gmail setup done...');
+      sendMail(ejs.render(html, { link, username }), email);
 
-
-
-let mailDetails = {
-	from: process.env.EMAIL_SENDER,
-	to: process.env.EMAIL_RECEIVER,
-	subject: 'Password Reset.',
-  html: `
-  <p>Hello ${username},</p>
-  <p>Please confirm your request to reset password</p>
-  <p>Click on the link below</p>
-  <p>${link}</p>
-  <p>Thank you</p>
-  <a href="#">stead-fast.com</a>
-  `
-};
-
-mailTransporter.sendMail(mailDetails, function(err, data) {
-	if(err) {
-		console.log('server error happened');
-	} else {
-		console.log('Email sent successfully');
-	}
-});
-
-    console.log(link);
-    return res.render('info-reset', {title: 'Email reset', email});
-  });
-});
-
-router.get(`/reset-password/:token`, async (req, res, next) => {
-  const { token } = req.params;
-  const {id, email} = jwt.verify(token, jwt_secret)
-
-  try {
-    res.render("reset-password", { email: email, title: 'password reset'});
-  } catch (error) {
-    console.log(error.message);
-    res.status(401).send(error.message);
-  }
-});
-
-router.post("/reset-password/:token", async (req, res, next) => {
-  const { token } = req.params;
-  const { password, password2 } = req.body;
-
-  try {
-    const {email} = jwt.verify(token, jwt_secret);
-    if (password !== password2) return;
-    const user = await User.findOne({email: email})
-    if(!user){
-      res.send('not found')
+      res.render("info-reset", { title: "Email reset", email });
+    } catch (error) {
+      console.log(error);
     }
+  });
 
-    user.password = user.generateHash(password)
-    await user.save()
+router
+  .route("/reset-password/:token")
+  .get(async (req, res, next) => {
+    const { token } = req.params;
+    const { email } = jwt.verify(token, jwt_secret);
 
-    res.redirect('/login')
-  } catch (error) {
-    res.send(error.message);
-  }
-});
+    try {
+      res.render("reset-password", { email: email, title: "password reset" });
+    } catch (error) {
+      console.log(error.message);
+      res.status(401).send(error.message);
+    }
+  })
+  .post(async (req, res, next) => {
+    const { token } = req.params;
+    const { password, password2 } = req.body;
+
+    try {
+      const { email } = jwt.verify(token, jwt_secret);
+      if (password !== password2) return;
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        res.send("not found");
+      }
+
+      user.password = user.generateHash(password);
+      await user.save();
+
+      res.redirect("/login");
+    } catch (error) {
+      res.send(error.message);
+    }
+  });
 
 router.get("/logout", requiresAuth, function (req, res, next) {
   req.logout();
@@ -181,9 +164,15 @@ router.get("/account", requiresAuth, function (req, res, next) {
   res.render("account", { title: "account", user: req.user });
 });
 
-router.route("/deposit").get(requiresAuth, function (req, res, next) {
-  res.render("deposit", { title: "deposit", plans });
-});
+router
+  .route("/deposit")
+  .get(requiresAuth, function (req, res, next) {
+    res.render("deposit", { title: "deposit", plans });
+  })
+  .post(requiresAuth, function (req, res, next) {
+    console.log(req.body);
+    res.redirect("/");
+  });
 
 router.get("/settings", requiresAuth, function (req, res, next) {
   res.render("settings", { title: "settings" });

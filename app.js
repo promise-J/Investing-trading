@@ -1,7 +1,6 @@
+const path = require("path");
 const express = require("express"),
   session = require("express-session"),
-  nodeMailer = require('nodemailer'),
-  crypto = require('crypto'),
   { flash } = require("express-flash-message");
 
 const mongoose = require("./services/mongoose"),
@@ -16,7 +15,7 @@ app.set("port", port);
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
