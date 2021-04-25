@@ -547,7 +547,7 @@ header .action__buttons .button.logout {
 /* End Dashboard Pages */
 
 /* Reset Pages */
-.reset-con{
+.reset-container{
   background-color: black;
   width: 80vw;
   min-height: 50vh;

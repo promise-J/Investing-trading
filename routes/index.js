@@ -156,10 +156,10 @@ router.post("/reset-password/:token", async (req, res, next) => {
 
   try {
     const {email} = jwt.verify(token, jwt_secret);
-    if (password !== password2) return;
+    if (password !== password2) return res.render('reset-password', {message: 'Passwords do not match', title: 'reset password', email});
     const user = await User.findOne({email: email})
     if(!user){
-      res.send('not found')
+      res.render('reset-password', {message: 'Email is not found.', title: 'reset password', email})
     }
 
     user.password = user.generateHash(password)
