@@ -8,7 +8,6 @@ const { plans } = require("../config");
 
 const jwt = require("jsonwebtoken");
 const jwt_secret = process.env.JWT_SECRET;
-let current_user;
 router.get("/", async function (req, res, next) {
   res.render("index", { title: "Express" });
 });
@@ -89,7 +88,8 @@ router.post("/forgot-password", async (req, res, next) => {
   console.log(email);
   User.findOne({ email: email }, function (err, user) {
     if (!user) return res.status(401).render("login", {title: 'forget-password', message: "email not found"}); 
-
+    
+    const {username} = user
     const userData = {
       email: user.email,
       id: user.id,
@@ -103,8 +103,8 @@ router.post("/forgot-password", async (req, res, next) => {
 let mailTransporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
-		user: 'user@gmail.com',
-		pass: '*********'
+		user: process.env.AUTH_USER,
+		pass: process.env.AUTH_PASS
 	}
 });
 console.log('gmail setup done...');
@@ -112,11 +112,17 @@ console.log('gmail setup done...');
 
 
 let mailDetails = {
-	from: 'chiemelapromise30@gmail.com',
-	to: 'chiemelapromise30@gmail.com',
-	subject: 'Password reset.',
-	text: 'You requested for a password reset,  Please click on the link below.',
-  html: `<p>${link}</p>`
+	from: process.env.EMAIL_SENDER,
+	to: process.env.EMAIL_RECEIVER,
+	subject: 'Password Reset.',
+  html: `
+  <p>Hello ${username},</p>
+  <p>Please confirm your request to reset password</p>
+  <p>Click on the link below</p>
+  <p>${link}</p>
+  <p>Thank you</p>
+  <a href="#">stead-fast.com</a>
+  `
 };
 
 mailTransporter.sendMail(mailDetails, function(err, data) {
@@ -128,7 +134,7 @@ mailTransporter.sendMail(mailDetails, function(err, data) {
 });
 
     console.log(link);
-    return res.send("A link has been sent to your email to reset the password. Please check your Gmail");
+    return res.render('info-reset', {title: 'Email reset', email});
   });
 });
 

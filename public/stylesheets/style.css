@@ -545,3 +545,13 @@ header .action__buttons .button.logout {
 }
 /* End Deposit */
 /* End Dashboard Pages */
+
+/* Reset Pages */
+.reset-con{
+  background-color: black;
+  width: 80vw;
+  min-height: 50vh;
+  margin: auto;
+}
+
+/* End Reset */
