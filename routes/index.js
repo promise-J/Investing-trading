@@ -6,7 +6,13 @@ const ejs = require("ejs");
 const router = express.Router();
 const { requiresAuth, sendMail } = require("../utils");
 const { User } = require("../models/user.model");
-const { plans, host, jwt_secret } = require("../config");
+const {
+  plans,
+  host,
+  jwt_secret,
+  payeeAccount,
+  payeeName,
+} = require("../config");
 
 router.get("/", async function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -91,6 +97,7 @@ router
       const user = await User.findOne({ email });
       if (!user) {
         console.log("no user");
+
         await req.flash("error", "email noneexistent");
         return res.status(400).redirect("/forgot-password");
       }
@@ -138,7 +145,7 @@ router
     const { password, password2 } = req.body;
 
     try {
-      const { email } = jwt.verify(token, jwt_secret);
+      const { email } = await jwt.verify(token, jwt_secret);
       if (password !== password2) return;
       const user = await User.findOne({ email: email });
       if (!user) {
@@ -150,6 +157,7 @@ router
 
       res.redirect("/login");
     } catch (error) {
+      console.log("herrr");
       res.send(error.message);
     }
   });
@@ -170,8 +178,29 @@ router
     res.render("deposit", { title: "deposit", plans });
   })
   .post(requiresAuth, function (req, res, next) {
-    console.log(req.body);
-    res.redirect("/");
+    const { planName, paymentType, amount } = req.body;
+
+    const plan = plans.find((plan) => plan.name === planName);
+
+    const data = {
+      plan,
+      title: "deposit",
+      amount,
+    };
+    switch (paymentType) {
+      case "bitcoin":
+        return res.render("confirm_deposit/bitcoin", {
+          ...data,
+        });
+      case "perfectmoney":
+        return res.render("confirm_deposit/perfectMoney", {
+          ...data,
+          payeeAccount,
+          payeeName,
+        });
+      default:
+        return res.redirect("/deposit");
+    }
   });
 
 router.get("/settings", requiresAuth, function (req, res, next) {

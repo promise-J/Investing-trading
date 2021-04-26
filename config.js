@@ -68,6 +68,8 @@ const config = {
     emailSender: requireProcessEnv("EMAIL_SENDER"),
     host: requireProcessEnv("HOST"),
     jwt_secret: requireProcessEnv("JWT_SECRET"),
+    payeeAccount: requireProcessEnv("PAYEE_ACCOUNT"),
+    payeeName: requireProcessEnv("PAYEE_NAME"),
   },
   development: {},
   production: {},

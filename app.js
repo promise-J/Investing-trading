@@ -6,13 +6,17 @@ const express = require("express"),
 const mongoose = require("./services/mongoose"),
   passport = require("./services/passport");
 
-const { port, mongo, secretKey } = require("./config");
-
+const { port, mongo, secretKey, host } = require("./config");
+const ejs = require("ejs");
 const db = mongoose.connection;
 const app = express();
 
 app.set("port", port);
 app.set("views", __dirname + "/views");
+
+app.engine("ejs", (filename, payload = {}, cb) => {
+  ejs.renderFile(filename, { ...payload, host }, {}, cb);
+});
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "public")));

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+
+  <body>
+    <%- include('../partials/header') %>
+
+    <main class="dashboard">
+      <%- include('../partials/dashboard_nav') %>
+      <div class="dashboard__page confirm_deposit perfectmoney">
+        <div class="container dashboard__page__content">
+          <h2>Make a deposit</h2>
+
+          <div class="card order_details">
+            <div class="detail">
+              <span class="name">Plan</span>
+              <span class="value"> <%= plan.name %> </span>
+            </div>
+
+            <div class="detail">
+              <span class="name">Profit</span>
+              <span class="value"> <%= plan.desc %> </span>
+            </div>
+
+            <div class="detail">
+              <span class="name">Principal Return</span>
+              <span class="value"> Yes </span>
+            </div>
+
+            <div class="detail">
+              <span class="name">Principal Withdraw</span>
+              <span class="value"> Available with 0.00% fee </span>
+            </div>
+
+            <div class="detail">
+              <span class="name">Credit Amount</span>
+              <span class="value"> $<%= amount %> </span>
+            </div>
+
+            <div class="detail">
+              <span class="name"> Deposit Fee</span>
+              <span class="value"> 0.00% + $0.00 (min. $0.00 max. $0.00) </span>
+            </div>
+
+            <div class="detail">
+              <span class="name"> Debit Amount</span>
+              <span class="value"> $<%= amount %> </span>
+            </div>
+          </div>
+
+          <form
+            action="https://perfectmoney.is/api/step1.asp"
+            id=""
+            method="POST"
+          >
+            <!-- <input
+              type="hidden"
+              name="pid"
+              value="S8AQIGEIIP3K0NOZPZ24EEWRQZPFQU9C"
+            /> -->
+            <input
+              type="hidden"
+              name="PAYEE_ACCOUNT"
+              value="<%= payeeAccount %>"
+            />
+            <input type="hidden" name="PAYEE_NAME" value="<%= payeeName %>" />
+            <input type="hidden" name="PAYMENT_ID" value="" />
+            <input type="hidden" name="PAYMENT_AMOUNT" value="<%= amount %>" />
+            <input type="hidden" name="PAYMENT_UNITS" value="USD" />
+            <input
+              type="hidden"
+              name="SUGGESTED_MEMO"
+              value="Deposit to metacoltd.club User Danyel"
+            />
+
+            <input
+              type="hidden"
+              name="STATUS_URL"
+              value="<%= `${host}/webhooks/perfectmoney` %>"
+            />
+            <input
+              type="hidden"
+              name="PAYMENT_URL"
+              value="<%= `${host}/deposit/sucess` %>"
+            />
+            <input type="hidden" name="PAYMENT_URL_METHOD" value="POST" />
+            <input
+              type="hidden"
+              name="NOPAYMENT_URL"
+              value="<%= `${host}/deposit/fail` %>"
+            />
+            <input type="hidden" name="NOPAYMENT_URL_METHOD" value="POST" />
+            <input type="hidden" name="BAGGAGE_FIELDS" value="pid" />
+
+            <button type="submit" class="button order">Process</button>
+            <a href="/deposit" class="button cancel">cancel</a>
+          </form>
+        </div>
+      </div>
+    </main>
+    <%- include('../partials/footer') %>
+  </body>
+</html>
