@@ -203,7 +203,15 @@ Auth Pages
   color: #fff;
   border: 1px solid #fff;
   width: 250px;
-  margin: 10px auto 0;
+  margin: 10px auto 0px;
+}
+.remember {
+  display: inline-block;
+  margin: 10px 0;
+}
+.remember .emph {
+  color: var(--primary-color);
+  display: inline-block;
 }
 @media (min-width: 768px) {
   .auth__form__inner {
@@ -424,6 +432,8 @@ header .action__buttons .button.logout {
 .card {
   border-radius: 10px;
   padding: 15px;
+  color: #fff;
+
   background: darkslateblue;
 }
 .info {
@@ -555,7 +565,35 @@ header .action__buttons .button.logout {
 
 /* End Reset */
 
+<<<<<<< HEAD
 /* Settings */
 
 
 /* End setting */
+=======
+/* confirm_deposit Page */
+
+.confirm_deposit .button.cancel {
+  margin: 10px 0;
+  background: #353c48;
+}
+
+.perfectmoney .order_details {
+  margin-bottom: 20px;
+}
+
+.order_details .detail {
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+}
+.order_details .detail .name {
+  flex: 1;
+}
+.order_details .detail .value {
+  /* margin-left: auto; */
+  flex: 1;
+}
+
+/* End confirm_depoist Page */
+>>>>>>> 35f4fa9075241efbee01962132f403ec11f0d409
