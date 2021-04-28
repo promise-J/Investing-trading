@@ -10,6 +10,19 @@
       <%- include('partials/dashboard_nav') %>
       <div class="dashboard__page">
         <h1>settings</h1>
+        <!-- accountname, registrationdate, yourfullname, new password, retype new password, your bitcoinacct,
+        email account -->
+        <div>
+          <p>AccountName:<%= user.username %></p>
+          <p>Registration date:<%= user.created_on %></p>
+          <p>Full name:<%= user.fullName %></p>
+          <p>Bitcoin address:<%= user.bitcoinAddress %></p>
+          <form action="/settings" method="POST">
+            <input type="password" name="pass" placeholder="new password">
+            <input type="password" name="pass2" placeholder="retype new password">
+            <input type="submit" value="SUBMIT">
+          </form>
+        </div>
       </div>
     </main>
   </body>

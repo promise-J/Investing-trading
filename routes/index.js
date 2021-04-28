@@ -23,7 +23,7 @@ router
   .post(async function (req, res, next) {
     const { password, ...rest } = req.body;
 
-    let user = new User({
+    let user = await new User({
       ...rest,
     });
 
@@ -174,8 +174,39 @@ router
     res.redirect("/");
   });
 
-router.get("/settings", requiresAuth, function (req, res, next) {
-  res.render("settings", { title: "settings" });
+router.get("/settings", requiresAuth, async function (req, res, next) {
+  const user = await User.findOne({email: req.user.email})
+  
+  console.log(user);
+  res.render("settings", { title: "settings", user });
+})
+.post("/settings", requiresAuth, async (req, res, next)=>{
+  const currUser = await User.findOne({email: req.user.email})
+   const {pass, pass2, email, username } = req.body
+   if(pass != pass2) return req.flash('error', 'passwords dont match!')
+   
+   const updateMany = {
+     email: email,
+     username: username,
+     password: new User.generateHash(password)
+   }
+
+   const existing = {
+     email: currUser.email,
+     username: currUser.username,
+     password: currUser.password
+   }
+
+   const Hashpassword = currUser.generateHash(pass)
+   currUser.password = Hashpassword
+
+   try {
+     await currUser.save()
+     req.flash('success', 'Password updated')
+   } catch (error) {
+     req.flash('error', 'error occured')
+   }
+   res.send('setting worked...')
 });
 
 router.get("/referrals", requiresAuth, function (req, res, next) {
