@@ -6,8 +6,9 @@ const express = require("express"),
 const mongoose = require("./services/mongoose"),
   passport = require("./services/passport");
 
-const { port, mongo, secretKey, host } = require("./config");
 const ejs = require("ejs");
+const { port, mongo, secretKey, host } = require("./config");
+
 const db = mongoose.connection;
 const app = express();
 
