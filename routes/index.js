@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const ejs = require("ejs");
 
 const router = express.Router();
-const { requiresAuth, sendMail } = require("../utils");
+const { requiresAuth, sendMail, diffObject } = require("../utils");
 const { User } = require("../models/user.model");
 const {
   plans,
@@ -203,40 +203,45 @@ router
     }
   });
 
-router.get("/settings", requiresAuth, async function (req, res, next) {
-  const user = await User.findOne({email: req.user.email})
-  
-  console.log(user);
-  res.render("settings", { title: "settings", user });
-})
-.post("/settings", requiresAuth, async (req, res, next)=>{
-  const currUser = await User.findOne({email: req.user.email})
-   const {pass, pass2, email, username } = req.body
-   if(pass != pass2) return req.flash('error', 'passwords dont match!')
-   
-   const updateMany = {
-     email: email,
-     username: username,
-     password: new User.generateHash(password)
-   }
+router
+  .get("/settings", requiresAuth, async function (req, res, next) {
+    const user = await User.findOne({ email: req.user.email });
+    res.render("settings", { title: "settings", user });
+  })
+  .post("/settings", requiresAuth, async (req, res, next) => {
+    const { password, confirmPassword, ...rest } = req.body;
+    const user = req.user;
 
-   const existing = {
-     email: currUser.email,
-     username: currUser.username,
-     password: currUser.password
-   }
+    // the difference between the flexible fields object and the rest of the body fieldsd
+    const changes = diffObject(user.flexibleFields(), rest);
 
-   const Hashpassword = currUser.generateHash(pass)
-   currUser.password = Hashpassword
+    if (
+      password &&
+      confirmPassword &&
+      password.trim() !== "" &&
+      password.length >= 6
+    ) {
+      if (password === confirmPassword) {
+        user.password = user.generateHash(password);
+      } else {
+        console.log("Invalid Password");
+        req.flash("error", "passwords dont match!");
+        return res.redirect("/settings");
+      }
+    }
 
-   try {
-     await currUser.save()
-     req.flash('success', 'Password updated')
-   } catch (error) {
-     req.flash('error', 'error occured')
-   }
-   res.send('setting worked...')
-});
+    Object.keys(changes).forEach((prop) => {
+      user[prop] = changes[prop];
+    });
+
+    try {
+      await user.save();
+      req.flash("success", "Password updated");
+    } catch (error) {
+      req.flash("error", "error occured");
+    }
+    res.redirect("/settings");
+  });
 
 router.get("/referrals", requiresAuth, function (req, res, next) {
   res.render("referrals", { title: "referrals" });

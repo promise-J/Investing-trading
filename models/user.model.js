@@ -34,13 +34,17 @@ const UserSchema = mongoose.Schema({
   secretAnswer: {
     type: String,
   },
+
   created_on: {
     type: Date,
     default: Date.now,
   },
-  lastAcess: {
-    type: Date,
-    default: Date.now,
+  userPlan: {
+    type: String,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -48,6 +52,21 @@ UserSchema.methods.generateHash = function (password) {
   const salt = bcrypt.genSaltSync(10);
 
   return bcrypt.hashSync(password, salt);
+};
+
+// Returns object fields that can be altered
+UserSchema.methods.flexibleFields = function () {
+  const obj = {};
+  let fields = [
+    "fullName",
+    "perfectMoneyAccount",
+    "bitcoinAddress",
+    "etherumAddress",
+    "email",
+  ];
+  fields.forEach((f) => (obj[f] = this[f]));
+
+  return obj;
 };
 
 UserSchema.methods.verifyPassword = function (password) {
