@@ -210,32 +210,33 @@ router.get("/settings", requiresAuth, async function (req, res, next) {
   res.render("settings", { title: "settings", user });
 })
 .post("/settings", requiresAuth, async (req, res, next)=>{
-  const currUser = await User.findOne({email: req.user.email})
+  // const currUser = await User.findOne({email: req.user.email})
+  const user = req.user
    const {pass, pass2, email, username } = req.body
-   if(pass != pass2) return req.flash('error', 'passwords dont match!')
-   
-   const updateMany = {
-     email: email,
-     username: username,
-     password: new User.generateHash(password)
+   if(pass=='' || pass2=='') return res.send('passwords fields empty')
+   if(pass != pass2) return res.send('passwords dont match')
+  //  req.flash('error', 'passwords dont match!')
+   if(!pass && !pass2){
+     res.send('complete please')
+   }else if(pass!=='' && pass2=='' || pass2!=='' && pass==''){
+     res.send('complete all')
+   }else{
+     res.send('fill password or confirm password')
    }
 
-   const existing = {
-     email: currUser.email,
-     username: currUser.username,
-     password: currUser.password
-   }
 
-   const Hashpassword = currUser.generateHash(pass)
-   currUser.password = Hashpassword
+  //  const Hashpassword = currUser.generateHash(pass)
+  //  currUser.password = Hashpassword
 
-   try {
-     await currUser.save()
-     req.flash('success', 'Password updated')
-   } catch (error) {
-     req.flash('error', 'error occured')
-   }
-   res.send('setting worked...')
+  //  try {
+  //    await currUser.save()
+  //    req.flash('success', 'Password updated')
+  //  } catch (error) {
+  //    req.flash('error', 'error occured')
+  //  }
+  console.log(req.user);
+  //  res.send('setting worked...')
+  res.render('settings', {title: 'setting', user})
 });
 
 router.get("/referrals", requiresAuth, function (req, res, next) {
