@@ -4,22 +4,31 @@ const TransctionSchema = mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ["withdraw", "deposit", "referral"],
+    enum: ["withdraw", "deposit", "bonus", "referral"],
   },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  currency: {
+    type: String,
+    default: "cash",
+    enum: ["bitcoin", "eth", "cash"],
+  },
+  status: {
+    type: String,
+    default: "PENDING",
+    enum: ["AVAILABLE", "LOCKED", "PENDING", "DECLINED", "WITHDRAWN"],
+  },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   amount: {
     type: Number,
     required: true,
   },
-  payingAccountId: String,
+  // plan: { type: mongoose.Schema.Types.ObjectId, ref: "Plan" },
+  transactionId: String,
   created_on: {
     type: Date,
     default: Date.now,
   },
 });
 
-TransctionSchema.methods.calculateBalance = function () {};
+const Transaction = mongoose.model("Transaction", TransctionSchema);
 
-const Transction = mongoose.model("Transction", TransctionSchema);
-
-module.exports = { Transction };
+module.exports = { Transaction };

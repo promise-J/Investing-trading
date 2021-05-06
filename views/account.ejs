@@ -44,7 +44,7 @@
                 <tr>
                   <td valign="top">Account Balance:</td>
                   <td>
-                    $<b>0.00</b><br />
+                    $<b><%= user.accountBalance %></b><br />
                     <small> </small>
                   </td>
                 </tr>
@@ -54,15 +54,15 @@
                 </tr>
                 <tr>
                   <td>Pending Withdrawal:</td>
-                  <td>$<b>0.00</b></td>
+                  <td>$<b><%= user.pendingWithdrawBalance %></b></td>
                 </tr>
                 <tr>
                   <td>Withdrew Total:</td>
-                  <td>$<b>0.00</b></td>
+                  <td>$<b><b><%= user.withdrawnBalance %></b></td>
                 </tr>
                 <tr>
                   <td>Active Deposit:</td>
-                  <td>$<b>0.00</b></td>
+                  <td>$<b><b><%= user.lockedDepositsBalance %></b></td>
                 </tr>
                 <tr>
                   <td>&nbsp;</td>

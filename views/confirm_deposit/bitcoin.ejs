@@ -15,9 +15,57 @@
            
             <form  method="POST"> 
        
-              <h2>Bitcoin</h2>
-              <button type="submit" class="button order">save</button>
-              <a href="/deposit" class="button cancel">cancel</a>
+              <p>Please send your payments to this account </p>
+
+
+              <div>
+                <span class="name">Plan</span>
+                <span class="value"><%= plan.name %></span>
+              </div>
+
+              <div>
+                <span class="name">desc</span>
+                <span class="value"><%= plan.desc %></span>
+              </div>
+
+              <div>
+                <span class="name">Profit</span>
+                <span class="value">$<%= profit %></span>
+              </div>
+
+              <div>
+                <span class="name">principal return</span>
+                <span class="value">Yes</span>
+              </div>
+
+              <div>
+                <span class="name">Amount</span>
+                <span class="value"><%= amount%></span>
+              </div>
+              <div class="input-group">
+                <input
+                autofocus
+                  placeholder="Bitcoin Address"
+                  type="text"
+                  id="payeraddress"
+                  name="payerAddress"
+                />
+              </div>
+
+              <!-- <div class="input-group">
+                <input
+         
+                  placeholder="Transaction ID"
+                  type="text"
+                  id="payeraddress"
+                  name="transactionId"
+                />
+              </div> -->
+              <div class="action__buttons">
+
+                <button type="submit" class="button order">save</button>
+                <a href="/deposit" class="button cancel">cancel</a>
+              </div>
             </div>
           </form>
         </div>

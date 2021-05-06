@@ -9,7 +9,24 @@
     <main class="dashboard">
       <%- include('partials/dashboard_nav') %>
       <div class="dashboard__page">
-        <h1>deposit List</h1>
+        <div class="container dashboard__page__content">
+          <h2>deposit List</h2>
+
+          <div class="list">
+            <% plans.forEach(function(plan){ %>
+            <div class="card">
+              <div class="plan__details"><%= plan.name %></div>
+              <div class="plan__deposits">
+                <% plan.deposits.forEach(function(deposit){ %>
+
+                <div><%= deposit.amount %></div>
+                <% }) %>
+              </div>
+            </div>
+
+            <% }) %>
+          </div>
+        </div>
       </div>
     </main>
   </body>

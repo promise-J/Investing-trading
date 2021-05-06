@@ -17,7 +17,7 @@
               <div class="checkbox">
                 <input type="radio" name="plan" class="<%= plan.name %>" id="<%=
                 plan.name %>" data-min="<%= plan.min %>" data-max="<%= plan.max
-                %>" <% if (plan.name===plans[0].name) { %> checked <% } %> />
+                %>" <% if (plan.default===true) { %> checked <% } %> />
                 <label for="<%= plan.name %>">
                   <span class="icon">
                     <i class="fas fa-check"></i>
@@ -37,7 +37,12 @@
                   <tbody>
                     <tr>
                       <td><%= plan.desc %></td>
-                      <td><%= plan.priceRange %></td>
+
+                      <td>
+                        <% if (plan.max >=9999999999999) { %> $<%= plan.min %>
+                        and more <% } else{ %> $<%= plan.min %> - $<%= plan.max
+                        %> <% } %>
+                      </td>
                       <td><%= plan.profit %>%</td>
                     </tr>
                   </tbody>
@@ -68,7 +73,7 @@
               <div class="choice-payment">
                 <div class="choice">
                   <div class="checkbox">
-                    <input type="radio" name="choice" id="bitcoin" />
+                    <input type="radio" name="choice" id="bitcoin" checked />
                     <label for="bitcoin">
                       <span class="icon">
                         <i class="fas fa-check"></i>
@@ -78,12 +83,7 @@
                   </div>
 
                   <div class="checkbox">
-                    <input
-                      type="radio"
-                      name="choice"
-                      id="perfectmoney"
-                      checked
-                    />
+                    <input type="radio" name="choice" id="perfectmoney" />
                     <label for="perfectmoney">
                       <span class="icon">
                         <i class="fas fa-check"></i>
