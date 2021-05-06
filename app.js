@@ -2,14 +2,25 @@ const path = require("path");
 const express = require("express"),
   session = require("express-session"),
   { flash } = require("express-flash-message");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 const mongoose = require("./services/mongoose"),
   passport = require("./services/passport");
 
-const { port, mongo, secretKey, host } = require("./config");
 const ejs = require("ejs");
+const { port, mongo, secretKey, host } = require("./config");
+
 const db = mongoose.connection;
 const app = express();
+
+const store = new MongoDBStore({
+  uri: mongo.uri,
+  collection: "mySessions",
+});
+
+store.on("error", function (error) {
+  console.log(error);
+});
 
 app.set("port", port);
 app.set("views", __dirname + "/views");
@@ -25,6 +36,10 @@ app.use(
   session({
     secret: secretKey,
     name: "sessionId",
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    },
+    store: store,
     resave: false,
     saveUninitialized: true,
   })
@@ -36,6 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", require("./routes"));
+app.use("/admin", require("./routes/admin"));
 
 db.once("connected", function () {
   return console.log(`🍃 connected to ${mongo.uri}`);

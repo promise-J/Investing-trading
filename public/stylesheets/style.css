@@ -565,12 +565,6 @@ header .action__buttons .button.logout {
 
 /* End Reset */
 
-<<<<<<< HEAD
-/* Settings */
-
-
-/* End setting */
-=======
 /* confirm_deposit Page */
 
 .confirm_deposit .button.cancel {
@@ -578,6 +572,9 @@ header .action__buttons .button.logout {
   background: #353c48;
 }
 
+.confirm_deposit form h2 {
+  /* text-align: center; */
+}
 .perfectmoney .order_details {
   margin-bottom: 20px;
 }
@@ -595,5 +592,14 @@ header .action__buttons .button.logout {
   flex: 1;
 }
 
+.confirm_deposit .action__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.confirm_deposit .action__buttons .button {
+  width: 30%;
+}
+
 /* End confirm_depoist Page */
->>>>>>> 35f4fa9075241efbee01962132f403ec11f0d409

@@ -13,12 +13,55 @@
         <!-- accountname, registrationdate, yourfullname, new password, retype new password, your bitcoinacct,
         email account -->
         <div>
+          <p>AccountName:<%= user.username %></p>
+          <p>Registration date:<%= user.created_on %></p>
           <form action="/settings" method="POST">
-            <input type="text" name="username" placeholder="update username" value="<%= user.username%>"><br/>
-            <input type="email" name="email" placeholder="change email" value="<%= user.email%>"><br/>
-            <input type="password" name="pass" placeholder="new password"><br/>
-            <input type="password" name="pass2" placeholder="retype new password">
-            <input type="submit" value="SUBMIT">
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Your Full Name"
+              value="<%= user.fullName %>"
+            />
+            <input
+              placeholder="Your Bitcoin Wallet Address"
+              type="text"
+              id="bitcoinAddress"
+              name="bitcoinAddress"
+              value="<%= user.bitcoinAddress %>"
+            />
+
+            <input
+              placeholder="Your Etherum Wallet Address"
+              type="text"
+              id="etherumAddress"
+              name="etherumAddress"
+              value="<%= user.etherumAddress %>"
+            />
+
+            <input
+              placeholder="Your PerfectMoney Account"
+              type="text"
+              id="perfectMoneyAccount"
+              name="perfectMoneyAccount"
+              value="<%= user.perfectMoneyAccount %>"
+            />
+
+            <input type="password" name="password" placeholder="new password" />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="retype new password"
+            />
+
+            <input
+              placeholder="Your Email  Address"
+              type="text"
+              id="email"
+              name="email"
+              value="<%= user.email %>"
+            />
+            <input type="submit" value="SUBMIT" />
           </form>
         </div>
       </div>

@@ -4,10 +4,12 @@ const jwt = require("jsonwebtoken");
 const ejs = require("ejs");
 
 const router = express.Router();
-const { requiresAuth, sendMail } = require("../utils");
+const { requiresAuth, sendMail, diffObject } = require("../utils");
 const { User } = require("../models/user.model");
+const { Transaction } = require("../models/transaction.model");
+const { Plan } = require("../models/plan.model");
 const {
-  plans,
+  // plans,
   host,
   jwt_secret,
   payeeAccount,
@@ -60,7 +62,11 @@ router
   .route("/login")
   .get(async function (req, res, next) {
     if (req.isAuthenticated()) {
-      return res.redirect("/account");
+      if (!req.user.isAdmin) {
+        return res.redirect("/account");
+      } else {
+        return res.redirect("/admin");
+      }
     }
     const messages = await req.consumeFlash("success");
     res.render("login", { title: "Login", messages });
@@ -168,25 +174,51 @@ router.get("/logout", requiresAuth, function (req, res, next) {
   res.redirect("/account");
 });
 
-router.get("/account", requiresAuth, function (req, res, next) {
-  res.render("account", { title: "account", user: req.user });
+router.get("/account", requiresAuth, async function (req, res, next) {
+  const user = req.user;
+
+  const [
+    accountBalance,
+    lockedDepositsBalance,
+    withdrawnBalance,
+    pendingWithdrawBalance,
+  ] = await Promise.all([
+    user.getAccountBalance(),
+    user.getLockedDepositsBalance(),
+    user.getWithdrawnBalance(),
+    user.getPendingWithdrawBalance(),
+  ]);
+
+  res.render("account", {
+    title: "account",
+    user: {
+      ...req.user.toObject(),
+      accountBalance,
+      lockedDepositsBalance,
+      withdrawnBalance,
+      pendingWithdrawBalance,
+    },
+  });
 });
 
 router
   .route("/deposit")
-  .get(requiresAuth, function (req, res, next) {
+  .get(requiresAuth, async function (req, res, next) {
+    const plans = await Plan.find({});
     res.render("deposit", { title: "deposit", plans });
   })
-  .post(requiresAuth, function (req, res, next) {
+  .post(requiresAuth, async function (req, res, next) {
     const { planName, paymentType, amount } = req.body;
 
-    const plan = plans.find((plan) => plan.name === planName);
+    const plan = await Plan.findOne({ name: planName });
 
     const data = {
       plan,
       title: "deposit",
       amount,
+      profit: (plan.profit / 100) * amount,
     };
+
     switch (paymentType) {
       case "bitcoin":
         return res.render("confirm_deposit/bitcoin", {
@@ -203,48 +235,54 @@ router
     }
   });
 
-router.get("/settings", requiresAuth, async function (req, res, next) {
-  const user = await User.findOne({email: req.user.email})
-  
-  console.log(user);
-  res.render("settings", { title: "settings", user });
-})
-.post("/settings", requiresAuth, async (req, res, next)=>{
-  // const currUser = await User.findOne({email: req.user.email})
-  const user = req.user
-   const {pass, pass2, email, username } = req.body
-   if(pass=='' || pass2=='') return res.send('passwords fields empty')
-   if(pass != pass2) return res.send('passwords dont match')
-  //  req.flash('error', 'passwords dont match!')
-   if(!pass && !pass2){
-     res.send('complete please')
-   }else if(pass!=='' && pass2=='' || pass2!=='' && pass==''){
-     res.send('complete all')
-   }else{
-     res.send('fill password or confirm password')
-   }
+router
+  .get("/settings", requiresAuth, async function (req, res, next) {
+    const user = await User.findOne({ email: req.user.email });
+    res.render("settings", { title: "settings", user });
+  })
+  .post("/settings", requiresAuth, async (req, res, next) => {
+    const { password, confirmPassword, ...rest } = req.body;
+    const user = req.user;
 
+    // the difference between the flexible fields object and the rest of the body fieldsd
+    const changes = diffObject(user.flexibleFields(), rest);
 
-  //  const Hashpassword = currUser.generateHash(pass)
-  //  currUser.password = Hashpassword
+    if (
+      password &&
+      confirmPassword &&
+      password.trim() !== "" &&
+      password.length >= 6
+    ) {
+      if (password === confirmPassword) {
+        user.password = user.generateHash(password);
+      } else {
+        console.log("Invalid Password");
+        req.flash("error", "passwords dont match!");
+        return res.redirect("/settings");
+      }
+    }
 
-  //  try {
-  //    await currUser.save()
-  //    req.flash('success', 'Password updated')
-  //  } catch (error) {
-  //    req.flash('error', 'error occured')
-  //  }
-  console.log(req.user);
-  //  res.send('setting worked...')
-  res.render('settings', {title: 'setting', user})
-});
+    Object.keys(changes).forEach((prop) => {
+      user[prop] = changes[prop];
+    });
+
+    try {
+      await user.save();
+      req.flash("success", "Password updated");
+    } catch (error) {
+      req.flash("error", "error occured");
+    }
+    res.redirect("/settings");
+  });
 
 router.get("/referrals", requiresAuth, function (req, res, next) {
   res.render("referrals", { title: "referrals" });
 });
 
-router.get("/deposit_list", requiresAuth, function (req, res, next) {
-  res.render("deposit_list", { title: "deposit_list" });
+router.get("/deposit_list", requiresAuth, async function (req, res, next) {
+  const plans = await Plan.find({}).populate("deposits");
+
+  res.render("deposit_list", { title: "deposit_list", plans });
 });
 
 router.get("/withdraw", requiresAuth, function (req, res, next) {
