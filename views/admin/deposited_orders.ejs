@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <head>
+      <%- include('partials/head') %>
+    </head>
+  </head>
+  <body class="deposits">
+    <div class="page">
+      <%- include('partials/nav') %>
+      <main>
+        <div class="container">
+          <h1 class="page__title">INVESTORS DEPOSITS MANAGEMENT</h1>
+          <div class="data-table">
+            <table>
+              <thead>
+                <tr class="row">
+                  <% keys.forEach(function(key){ %>
+                  <th class="col <%= key %>"><%= key %></th>
+                  <% }) %>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% entries.forEach(function(entry){ %> <% const obj
+                ={...entry.user,...entry}; %>
+
+                <tr class="row">
+                  <% keys.forEach(function(key){ %>
+                  <td class="col <%= key %>" data-label="<%= key %>">
+                    <p><%= obj[key] %></p>
+                  </td>
+
+                  <% }) %>
+                  <td class="action_buttons">
+                    <a href="#" class="button is-primary">Approve</a>
+                  </td>
+                  <td class="action_buttons">
+                    <a href="#" class="button is-success">Pay referral</a>
+                  </td>
+
+                  <td class="action_buttons">
+                    <a href="#" class="button is-danger">decline</a>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
