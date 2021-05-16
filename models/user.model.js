@@ -97,7 +97,7 @@ UserSchema.methods.getAccountBalance = async function () {
     },
   ]);
 
-  return value[0].amount;
+  return value[0] ? value[0].amount : 0;
 };
 
 UserSchema.methods.getLockedDepositsBalance = async function () {
@@ -119,7 +119,7 @@ UserSchema.methods.getLockedDepositsBalance = async function () {
     },
   ]);
 
-  return value[0].amount;
+  return value[0] ? value[0].amount : 0;
 };
 
 UserSchema.methods.getWithdrawnBalance = async function () {
@@ -141,7 +141,7 @@ UserSchema.methods.getWithdrawnBalance = async function () {
     },
   ]);
 
-  return value[0].amount;
+  return value[0] ? value[0].amount : 0;
 };
 
 UserSchema.methods.getPendingWithdrawBalance = async function () {
@@ -163,7 +163,7 @@ UserSchema.methods.getPendingWithdrawBalance = async function () {
     },
   ]);
 
-  return value[0].amount;
+  return value[0] ? value[0].amount : 0;
 };
 
 // UserSchema.methods.getEarnedBalance = async function () {
@@ -185,7 +185,7 @@ UserSchema.methods.getPendingWithdrawBalance = async function () {
 //     },
 //   ]);
 
-//   return value[0].amount;
+//   return value[0] ? value[0].amount : 0;
 // };
 //=
 const User = mongoose.model("User", UserSchema);
