@@ -4,10 +4,67 @@
     <%- include('partials/head') %>
   </head>
   <body>
-    <header><%- include('partials/header') %></header>
-    <main>
-      <h1>settings</h1>
+    <%- include('partials/header') %>
+
+    <main class="dashboard">
+      <%- include('partials/dashboard_nav') %>
+      <div class="dashboard__page">
+        <h1>settings</h1>
+        <!-- accountname, registrationdate, yourfullname, new password, retype new password, your bitcoinacct,
+        email account -->
+        <div>
+          <p>AccountName:<%= user.username %></p>
+          <p>Registration date:<%= user.created_on %></p>
+          <form action="/settings" method="POST">
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Your Full Name"
+              value="<%= user.fullName %>"
+            />
+            <input
+              placeholder="Your Bitcoin Wallet Address"
+              type="text"
+              id="bitcoinAddress"
+              name="bitcoinAddress"
+              value="<%= user.bitcoinAddress %>"
+            />
+
+            <input
+              placeholder="Your Etherum Wallet Address"
+              type="text"
+              id="etherumAddress"
+              name="etherumAddress"
+              value="<%= user.etherumAddress %>"
+            />
+
+            <input
+              placeholder="Your PerfectMoney Account"
+              type="text"
+              id="perfectMoneyAccount"
+              name="perfectMoneyAccount"
+              value="<%= user.perfectMoneyAccount %>"
+            />
+
+            <input type="password" name="password" placeholder="new password" />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="retype new password"
+            />
+
+            <input
+              placeholder="Your Email  Address"
+              type="text"
+              id="email"
+              name="email"
+              value="<%= user.email %>"
+            />
+            <input type="submit" value="SUBMIT" />
+          </form>
+        </div>
+      </div>
     </main>
-    <footer><%- include('partials/footer') %></footer>
   </body>
 </html>

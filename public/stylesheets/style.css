@@ -1,0 +1,771 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: "Ubuntu", sans-serif;
+}
+
+:root {
+  font-size: 14px;
+  --primary-color: #d601f9;
+  --primary-light-color: #fff;
+  --secondary-color: #6ec1e4;
+}
+body {
+  font-family: "Ubuntu", sans-serif;
+  height: var(--vh);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+li {
+  list-style: none;
+}
+.container {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* Global Styles */
+.button,
+.button-outline {
+  color: var(--primary-light-color);
+  height: 3rem;
+  min-width: fit-content;
+  padding: 0 10px;
+  width: 100%;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 1rem;
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button {
+  background-color: var(--primary-color);
+}
+.button-outline {
+  background: transparent;
+  /* border: px solid var(--primary-color); */
+}
+@media (min-width: 768px) {
+  :root {
+    font-size: 16px;
+  }
+}
+.checkbox {
+  display: flex;
+  align-items: center;
+  display: inline-block;
+}
+.checkbox input {
+  display: none;
+}
+.checkbox label .icon {
+  color: #000;
+  display: none;
+}
+.checkbox input:checked + label .icon {
+  display: block;
+}
+
+.checkbox .text {
+  flex: 1;
+}
+.checkbox label {
+  cursor: pointer;
+  --check-size: 15px;
+  border: 1px solid #000;
+  height: var(--check-size);
+  width: var(--check-size);
+  background: #fff;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.button {
+  background-color: var(--primary-color);
+  color: var(--primary-light-color);
+  height: 3rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.input-group {
+  width: 100%;
+  display: block;
+  padding: 0.5rem 1.1rem;
+  margin-bottom: 10px;
+  border-radius: none;
+  background: rgb(232, 240, 254);
+  fill: none;
+}
+
+.input-group input {
+  border: none;
+  background: transparent;
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+.input-group input,
+.input-group input::placeholder {
+  font-weight: 300;
+  color: #000000;
+  font-size: 0.9rem;
+}
+
+/* 
+Auth Pages
+*/
+
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.auth__form,
+.auth__banner {
+  width: 100%;
+  min-height: calc(var(--vh) * 0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth__form {
+  padding: 2rem 0;
+}
+.auth__form__inner {
+  width: 80%;
+}
+.auth__form__meta {
+  margin-bottom: 20px;
+}
+.auth__form__inner form {
+  width: 100%;
+}
+
+.input-group {
+  height: 50px;
+}
+.auth__form .button {
+  margin-top: 10px;
+  /* border-radius: 0.5rem; */
+}
+
+.terms-check {
+  margin: 1rem 0;
+}
+.auth__banner {
+  /* background: url("https://stead-fast.net/assets/images/log-reg.jpg"); */
+  background: url("/images/banner-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.auth__banner::after {
+  content: "";
+  background: rgb(43, 54, 158);
+  opacity: 0.4;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.auth__banner .content {
+  z-index: 1;
+  color: #fff;
+  text-align: center;
+  /* display: none; */
+}
+.auth__banner .content .button {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  width: 250px;
+  margin: 10px auto 0px;
+}
+.remember {
+  display: inline-block;
+  margin: 10px 0;
+}
+.remember .emph {
+  color: var(--primary-color);
+  display: inline-block;
+}
+@media (min-width: 768px) {
+  .auth__form__inner {
+    width: 60%;
+  }
+
+  .auth {
+    height: var(--vh);
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  .auth__form,
+  .auth__banner {
+    width: 50%;
+    height: 100%;
+  }
+}
+
+/* End Auth Pages */
+
+/* Dashboard  Pages*/
+footer {
+  height: 30px;
+}
+.header-reset {
+  height: 70px;
+}
+header {
+  height: 70px;
+  background-color: #353c48;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  width: 95%;
+  margin: 0 auto;
+  height: 100%;
+}
+header .logo {
+  width: 50%;
+}
+header .logo {
+  object-fit: contain;
+  position: relative;
+  left: -50px;
+}
+
+header .menu_button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 50%;
+}
+header .menu_button .icon {
+  font-size: 2.3rem;
+  color: #fff;
+  cursor: pointer;
+}
+header .action__buttons {
+  display: none;
+}
+
+header .action__buttons .button {
+  width: 155px;
+}
+header .action__buttons .button.logout {
+  background: transparent !important;
+  margin-left: 15px;
+  border: 1px solid #fff;
+}
+.dashboard {
+  display: flex;
+  /* height: var(--vh); */
+}
+
+.dashboard__page {
+  width: 100%;
+}
+
+.dashboard_nav-reset,
+.dashboard_nav {
+  width: calc(var(--vw) * 0.8);
+  max-width: 300px;
+}
+.dashboard_nav-reset {
+  display: none;
+}
+.dashboard_nav {
+  position: fixed;
+  top: 0;
+  left: -1000px;
+  background: #8a3598;
+  color: #fff;
+  z-index: 2000;
+  height: var(--vh);
+  width: calc(var(--vw) * 0.8);
+  max-width: 300px;
+  transition: ease-in 0.4s;
+}
+.dashboard_nav.active {
+  left: 0;
+  transition: ease-out 0.4s;
+}
+
+.overlay {
+  position: fixed;
+  background: rgba(51, 56, 89);
+  opacity: 0;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: none;
+  z-index: 1000;
+  transition: linear 0.2s;
+}
+.overlay.show {
+  display: block;
+}
+.overlay.active {
+  opacity: 0.5;
+  transition: linear 0.2s;
+}
+.dashboard_nav .links {
+  width: 90%;
+  margin: 120px auto 0;
+}
+
+.dashboard_nav .link {
+  color: #fff;
+  white-space: nowrap;
+
+  /* font-size: 1.2rem; */
+  font-weight: bold;
+  display: block;
+
+  padding: 9px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  height: 43px;
+  text-transform: uppercase;
+  cursor: pointer;
+  /* border-radius: 3rem; */
+  border: none;
+}
+.dashboard_nav .link .icon {
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dashboard_nav .link:hover {
+  color: #2196f3;
+  background-color: rgba(0, 0, 0, 0.15);
+  transition: ease-out 0.2s;
+}
+
+.dashboard_nav .link.active,
+.dashboard_nav .link.active:hover {
+  background: rgb(28, 183, 236);
+  color: #111;
+}
+.dashboard__page__content {
+  margin-top: 50px;
+}
+.dashboard__page__content h2 {
+  position: relative;
+  left: -20px;
+  margin: 20px;
+  text-transform: capitalize;
+  color: #777;
+  font-size: bold;
+  font-size: 1.4rem;
+}
+@media (min-width: 1024px) {
+  header .action__buttons {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  header {
+    height: 70px;
+  }
+  header .menu_button {
+    display: none;
+  }
+  .dashboard {
+    display: flex;
+  }
+
+  .dashboard__page {
+    width: 80%;
+  }
+
+  .dashboard_nav {
+    left: 0px;
+    z-index: 50;
+    transition: none;
+  }
+  .overlay {
+    display: none;
+  }
+  .dashboard_nav-reset {
+    display: block;
+  }
+}
+
+/* Account */
+
+.card {
+  border-radius: 10px;
+  padding: 15px;
+  color: #fff;
+
+  background: darkslateblue;
+}
+.info {
+  height: 102px;
+
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+}
+.info__inner {
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.quick-links {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.quick-links .button {
+  margin: 10px 0;
+}
+
+.account__stats table {
+  width: 100%;
+}
+.account__stats tbody {
+  width: 100%;
+}
+.account__stats table tr {
+  border-bottom: 1px solid #fff;
+  color: #fff;
+}
+.account__stats table td {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}
+
+@media (min-width: 768px) {
+  .info {
+    height: 62px;
+  }
+  .quick-links {
+    margin-top: 40px;
+    height: 70px;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .quick-links .button {
+    margin-right: 20px;
+  }
+  .quick-links .button:last-of-type {
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+}
+/* End Account */
+
+/* Deposit */
+.plan {
+  margin-bottom: 20px;
+  color: #fff;
+}
+.plan__content {
+  padding: 10px 0;
+}
+.plan h4,
+.checkout h4 {
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.plan table {
+  width: 100%;
+  text-align: center;
+  text-transform: capitalize;
+  table-layout: fixed;
+}
+.plan tbody {
+  margin: 10px 0 10px;
+}
+.checkout {
+  color: #fff;
+}
+.balance {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.balance span {
+  flex: 1;
+}
+.balance .value {
+  display: flex;
+  justify-content: flex-end;
+}
+.spend-amount {
+  display: flex;
+  align-items: center;
+}
+.spend-amount span,
+.spend-amount .input-group {
+  flex: 1;
+}
+
+.choice-payment .checkbox {
+  display: flex;
+  align-items: center;
+}
+.spend-button {
+  margin: 20px 0 0;
+}
+/* End Deposit */
+/* End Dashboard Pages */
+
+/* Reset Pages */
+.reset-container {
+  background-color: black;
+  width: 80vw;
+  height: 50vh;
+  margin: auto;
+}
+
+/* End Reset */
+
+/* confirm_deposit Page */
+
+.confirm_deposit .button.cancel {
+  margin: 10px 0;
+  background: #353c48;
+}
+
+.confirm_deposit form h2 {
+  /* text-align: center; */
+}
+.perfectmoney .order_details {
+  margin-bottom: 20px;
+}
+
+.order_details .detail {
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+}
+.order_details .detail .name {
+  flex: 1;
+}
+.order_details .detail .value {
+  /* margin-left: auto; */
+  flex: 1;
+}
+
+.confirm_deposit .action__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.confirm_deposit .action__buttons .button {
+  width: 30%;
+}
+
+/* End confirm_depoist Page */
+
+
+/* About us=== footer/ home */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:ital,wght@1,300&display=swap');
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body{
+    height: 100vh;
+}
+
+header{
+    /* background-color: brown; */
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+}
+
+.head1, .head2{
+    /* background: blue; */
+    height: 40px;
+    margin: 5px 0 0;
+}
+
+.logo-links {
+    /* background-color: green; */
+    height: 100%;
+    display: flex;
+}
+
+.logo-img {
+    flex: 0.37;
+}
+
+
+
+.all-drop {
+    /* background-color: red; */
+    flex: 0.63;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    justify-content: space-around;
+}
+
+.all-drop select {
+    width: 40px;
+}
+
+.logo-img img {
+    height: 4rem;
+    width: 15rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.center-flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.power-logo {
+    /* background-color: white; */
+    font-size: 11px;
+    color: rgb(90, 88, 88);
+}
+
+.power-logo b {
+    font-size: 13px;
+}
+
+.power-logo img {
+    height: 15px;
+}
+
+.head3 {
+    flex: 1;
+    /* background: red; */
+}
+
+.head3 .logo-section {
+    height: 85px;
+    /* display: flex; */
+    /* background-color: burlywood; */
+}
+
+.head1 marquee {
+    color: black;
+    font-size: 1rem;
+    font-weight: lighter;
+}
+
+.head1 marquee span {
+    margin: 0 20px;
+    color: red;
+}
+
+.head2 select{
+  height: 70%;
+  width: 100%;
+  color: rgb(87, 84, 84);
+  padding: 0 10px;
+}
+
+main {
+    display: flex;
+    border-top: 1px solid black;
+    flex-direction: column;
+    height: 50rem;
+    /* background-color: rgb(143, 14, 143); */
+}
+
+.about-head {
+    color: white;
+    background-color: rgb(107, 115, 192);
+    flex: 0.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 27px;
+}
+
+.about-content {
+    color: rgb(99, 95, 95);
+    flex: 0.7;
+    /* background-color: yellow; */
+    font-size: 30px;
+    line-height: 1.2;
+    padding: 1rem;
+    text-align: center;
+}
+
+footer {
+    background-color: rgb(107, 115, 192);
+    height: 3rem;
+    display: flex;
+    padding: 1rem;
+}
+.footer1, .footer2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.footer2 a:hover {
+    color: rgb(42, 31, 196);
+}
+
+.footer1 {
+    flex: 4;
+}
+.footer2 {
+    flex: 6;
+    justify-content: space-around;
+    padding: 0 1rem;
+}
+

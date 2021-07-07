@@ -4,10 +4,75 @@
     <%- include('partials/head') %>
   </head>
   <body>
-    <header><%- include('partials/header') %></header>
-    <main>
-      <h1>Account/Dashboard</h1>
+    <%- include('partials/header') %>
+
+    <main class="dashboard">
+      <%- include('partials/dashboard_nav') %>
+      <div class="dashboard__page">
+        <div class="container dashboard__page__content">
+          <h2>Your account</h2>
+          <div class="info card">
+            <div class="info__inner">
+              No money? No problem, Promote our site and start earning now
+            </div>
+          </div>
+
+          <div class="quick-links card">
+            <a href="/deposit" class="button">Make deposits</a>
+            <a href="/withdraw" class="button">Withdraw Profits</a
+            ><a href="/referrals" class="button">Promo Banners</a>
+          </div>
+          <h2>Account statistics</h2>
+          <div class="account__stats card">
+            <table>
+              <tbody>
+                <tr>
+                  <td>User:</td>
+                  <td><%= user.username %></td>
+                </tr>
+                <tr>
+                  <td>Registration Date:</td>
+                  <td>Apr-20-2021</td>
+                </tr>
+                <tr>
+                  <td>Last Access:</td>
+                  <td>23 Apr, 5:35&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td valign="top">Account Balance:</td>
+                  <td>
+                    $<b><%= user.accountBalance %></b><br />
+                    <small> </small>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Earned Total:</td>
+                  <td>$<b>0.00</b></td>
+                </tr>
+                <tr>
+                  <td>Pending Withdrawal:</td>
+                  <td>$<b><%= user.pendingWithdrawBalance %></b></td>
+                </tr>
+                <tr>
+                  <td>Withdrew Total:</td>
+                  <td>$<b><b><%= user.withdrawnBalance %></b></td>
+                </tr>
+                <tr>
+                  <td>Active Deposit:</td>
+                  <td>$<b><b><%= user.lockedDepositsBalance %></b></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </main>
-    <footer><%- include('partials/footer') %></footer>
+    <%- include('partials/footer') %>
   </body>
 </html>

@@ -4,10 +4,161 @@
     <%- include('partials/head') %>
   </head>
   <body>
-    <header><%- include('partials/header') %></header>
-    <main>
-      <h1>Make deposit</h1>
+    <%- include('partials/header') %>
+
+    <main class="dashboard">
+      <%- include('partials/dashboard_nav') %>
+      <div class="dashboard__page">
+        <div class="container dashboard__page__content">
+          <h2>Make a deposit</h2>
+          <form action="/deposit" id="deposit_form" method="POST">
+            <% plans.forEach(function(plan){ %>
+            <div class="card plan">
+              <div class="checkbox">
+                <input type="radio" name="plan" class="<%= plan.name %>" id="<%=
+                plan.name %>" data-min="<%= plan.min %>" data-max="<%= plan.max
+                %>" <% if (plan.default===true) { %> checked <% } %> />
+                <label for="<%= plan.name %>">
+                  <span class="icon">
+                    <i class="fas fa-check"></i>
+                  </span>
+                </label>
+              </div>
+              <h4><%= plan.name %></h4>
+              <div class="plan__content">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>description</th>
+                      <th>spent amount</th>
+                      <th>profit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><%= plan.desc %></td>
+
+                      <td>
+                        <% if (plan.max >=9999999999999) { %> $<%= plan.min %>
+                        and more <% } else{ %> $<%= plan.min %> - $<%= plan.max
+                        %> <% } %>
+                      </td>
+                      <td><%= plan.profit %>%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <% }) %>
+            <div class="checkout card">
+              <h3 class="balance">
+                <span> Your account balance ($): </span>
+                <span class="value"> $0.00 </span>
+              </h3>
+
+              <div class="spend-amount">
+                <span> Amount to Spend ($):</span>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    name="amount"
+                    id="deposit_amount"
+                    value="100"
+                    min="100"
+                    max="4990"
+                  />
+                </div>
+              </div>
+
+              <div class="choice-payment">
+                <div class="choice">
+                  <div class="checkbox">
+                    <input type="radio" name="choice" id="bitcoin" checked />
+                    <label for="bitcoin">
+                      <span class="icon">
+                        <i class="fas fa-check"></i>
+                      </span>
+                    </label>
+                    <p class="text">Spend funds from Bitcoin</p>
+                  </div>
+
+                  <div class="checkbox">
+                    <input type="radio" name="choice" id="perfectmoney" />
+                    <label for="perfectmoney">
+                      <span class="icon">
+                        <i class="fas fa-check"></i>
+                      </span>
+                    </label>
+                    <p class="text">Spend funds from Perfect Money Account</p>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="button spend-button">Spend</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
-    <footer><%- include('partials/footer') %></footer>
+    <%- include('partials/footer') %>
+
+    <script>
+      const deposit_amount = document.querySelector("#deposit_amount");
+      const plans = document.querySelectorAll("input[name='plan']"),
+        paymentOptions = document.querySelectorAll("input[name='choice']");
+
+      let selectedPlan = document.querySelector("input[name='plan']:checked"),
+        paymentOption = document.querySelector("input[name='choice']:checked");
+
+      function createInput(name, value) {
+        const inp = document.createElement("input");
+        inp.type = "text";
+        inp.value = value;
+        inp.name = name;
+        return inp;
+      }
+
+      document
+        .querySelector("#deposit_form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const f = document.createElement("form");
+          document.body.append(f);
+
+          f.append(createInput("planName", selectedPlan.id));
+          f.append(createInput("paymentType", paymentOption.id));
+
+          f.append(deposit_amount.cloneNode());
+
+          f.setAttribute("hidden", true);
+          f.setAttribute("method", "post");
+          f.setAttribute("action", "/deposit");
+
+          f.submit();
+        });
+
+      paymentOptions.forEach((option) => {
+        option.addEventListener("change", function (e) {
+          if (paymentOption !== this) {
+            paymentOption = this;
+          }
+        });
+      });
+      plans.forEach((el) => {
+        el.addEventListener("change", function (e) {
+          if (selectedPlan !== this) {
+            selectedPlan = this;
+          }
+          const min = Number(selectedPlan.dataset.min);
+          const max = Number(selectedPlan.dataset.max);
+          deposit_amount.setAttribute("min", min);
+          deposit_amount.setAttribute("value", min);
+          deposit_amount.setAttribute("max", max);
+          if (max <= min) {
+            deposit_amount.removeAttribute("max");
+          }
+        });
+      });
+    </script>
   </body>
 </html>
